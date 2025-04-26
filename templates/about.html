@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+
+{% block title %}About SiliFault - Advanced Wafer Defect Detection{% endblock %}
+
+{% block extra_css %}
+<style>
+    .about-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+    
+    .about-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .about-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-light);
+    }
+    
+    .about-subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .about-section {
+        margin-bottom: 4rem;
+    }
+    
+    .about-section-title {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+        color: var(--text-light);
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+    
+    .about-section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background-color: var(--accent-color);
+    }
+    
+    .about-section-content {
+        color: var(--text-secondary);
+        line-height: 1.7;
+    }
+    
+    .about-section-content p {
+        margin-bottom: 1.5rem;
+    }
+    
+    .about-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .about-card {
+        background-color: var(--dark-card);
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--dark-border);
+        transition: var(--transition);
+    }
+    
+    .about-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-color);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .about-card-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-light);
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+    }
+    
+    .about-card-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+        color: var(--text-light);
+    }
+    
+    .about-card-content {
+        color: var(--text-secondary);
+        line-height: 1.6;
+    }
+    
+    .team-section {
+        margin-top: 4rem;
+    }
+    
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .team-card {
+        background-color: var(--dark-card);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--dark-border);
+        transition: var(--transition);
+    }
+    
+    .team-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-color);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .team-image {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+    
+    .team-info {
+        padding: 1.5rem;
+    }
+    
+    .team-name {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        color: var(--text-light);
+    }
+    
+    .team-role {
+        font-size: 0.875rem;
+        color: var(--accent-color);
+        margin-bottom: 1rem;
+    }
+    
+    .team-bio {
+        color: var(--text-secondary);
+        font-size: 0.875rem;
+        line-height: 1.6;
+    }
+    
+    .contact-section {
+        margin-top: 4rem;
+        text-align: center;
+    }
+    
+    .contact-title {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+        color: var(--text-light);
+    }
+    
+    .contact-description {
+        color: var(--text-secondary);
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .contact-btn {
+        display: inline-block;
+        background-color: var(--accent-color);
+        color: var(--text-light);
+        padding: 0.8rem 2rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+    }
+    
+    .contact-btn:hover {
+        background-color: #1976d2;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+    
+    @media (max-width: 768px) {
+        .about-container {
+            padding: 1rem;
+        }
+        
+        .about-title {
+            font-size: 2rem;
+        }
+        
+        .about-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .about-section-title {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="about-container">
+    <div class="about-header">
+        <h1 class="about-title">About SiliFault</h1>
+        <p class="about-subtitle">Revolutionizing wafer defect detection with advanced AI technology</p>
+    </div>
+    
+    <div class="about-section">
+        <h2 class="about-section-title">Our Mission</h2>
+        <div class="about-section-content">
+            <p>SiliFault is dedicated to transforming the semiconductor manufacturing industry by providing cutting-edge AI-powered solutions for wafer defect detection. Our mission is to help manufacturers improve yield rates, reduce production costs, and ensure the highest quality standards in their products.</p>
+            <p>Founded by a team of experts in computer vision, machine learning, and semiconductor manufacturing, SiliFault combines deep industry knowledge with state-of-the-art technology to deliver solutions that address real-world challenges in wafer inspection.</p>
+        </div>
+    </div>
+        
+    <div class="about-section">
+        <h2 class="about-section-title">Our Technology</h2>
+        <div class="about-section-content">
+            <p>At the heart of SiliFault is our proprietary AI technology, which has been trained on millions of wafer images to detect and classify defects with unprecedented accuracy. Our system can identify various types of defects, including edge defects, scratches, donut defects, and random contamination.</p>
+            <p>The technology behind SiliFault includes:</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-card">
+                <div class="about-card-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3 class="about-card-title">Deep Learning</h3>
+                <p class="about-card-content">Advanced neural networks trained on extensive datasets to recognize patterns and anomalies in wafer images.</p>
+            </div>
+            <div class="about-card">
+                <div class="about-card-icon">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <h3 class="about-card-title">Computer Vision</h3>
+                <p class="about-card-content">Sophisticated image processing algorithms that analyze wafer surfaces at the microscopic level.</p>
+            </div>
+            <div class="about-card">
+                <div class="about-card-icon">
+                    <i class="fas fa-tachometer-alt"></i>
+                </div>
+                <h3 class="about-card-title">Real-Time Processing</h3>
+                <p class="about-card-content">Optimized for speed, our system can analyze wafer images in milliseconds, enabling inline inspection.</p>
+            </div>
+        </div>
+    </div>
+        
+    <div class="about-section">
+        <h2 class="about-section-title">Our Team</h2>
+        <div class="about-section-content">
+            <p>SiliFault is powered by a diverse team of experts in AI, computer vision, semiconductor manufacturing, and software engineering. Our team brings together decades of combined experience in developing and deploying AI solutions for industrial applications.</p>
+        </div>
+        <div class="team-grid">
+            <div class="team-card">
+                <img src="{{ url_for('static', filename='images/team1.jpg') }}" alt="Team Member" class="team-image" onerror="this.src='https://randomuser.me/api/portraits/men/32.jpg'">
+                <div class="team-info">
+                    <h3 class="team-name">Dr. James Chen</h3>
+                    <p class="team-role">CEO & Co-founder</p>
+                    <p class="team-bio">Former research director at a leading semiconductor manufacturer with 15+ years of experience in computer vision and AI.</p>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="{{ url_for('static', filename='images/team2.jpg') }}" alt="Team Member" class="team-image" onerror="this.src='https://randomuser.me/api/portraits/women/44.jpg'">
+                <div class="team-info">
+                    <h3 class="team-name">Dr. Sarah Johnson</h3>
+                    <p class="team-role">CTO & Co-founder</p>
+                    <p class="team-bio">PhD in Machine Learning with expertise in deep learning for computer vision applications.</p>
+                </div>
+            </div>
+            <div class="team-card">
+                <img src="{{ url_for('static', filename='images/team3.jpg') }}" alt="Team Member" class="team-image" onerror="this.src='https://randomuser.me/api/portraits/men/67.jpg'">
+                <div class="team-info">
+                    <h3 class="team-name">Michael Rodriguez</h3>
+                    <p class="team-role">Head of Engineering</p>
+                    <p class="team-bio">Software engineer with experience in developing AI-powered solutions for manufacturing industries.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="contact-section">
+        <h2 class="contact-title">Get in Touch</h2>
+        <p class="contact-description">Interested in learning more about how SiliFault can transform your wafer inspection process? Contact our team to schedule a demo or discuss your specific needs.</p>
+        <a href="{{ url_for('contact') }}" class="contact-btn">Contact Us</a>
+    </div>
+</div>
+{% endblock %}

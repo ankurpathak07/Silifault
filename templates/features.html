@@ -1,0 +1,522 @@
+{% extends "base.html" %}
+
+{% block title %}Features - SiliFault{% endblock %}
+
+{% block extra_css %}
+<style>
+    .features-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+    
+    .features-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .features-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--text-light);
+    }
+    
+    .features-subtitle {
+        font-size: 1.25rem;
+        color: var(--text-secondary);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+    
+    .features-section {
+        margin-bottom: 4rem;
+    }
+    
+    .features-section-title {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+        color: var(--text-light);
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+    
+    .features-section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background-color: var(--accent-color);
+    }
+    
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .feature-card {
+        background-color: var(--dark-card);
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--dark-border);
+        transition: var(--transition);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--accent-color);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .feature-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-light);
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .feature-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.75rem;
+        color: var(--text-light);
+    }
+    
+    .feature-description {
+        color: var(--text-secondary);
+        line-height: 1.6;
+        flex-grow: 1;
+    }
+    
+    .feature-list {
+        margin-top: 1rem;
+        padding-left: 1.5rem;
+    }
+    
+    .feature-list li {
+        color: var(--text-secondary);
+        margin-bottom: 0.5rem;
+        position: relative;
+    }
+    
+    .feature-list li::before {
+        content: '✓';
+        color: var(--accent-color);
+        position: absolute;
+        left: -1.5rem;
+    }
+    
+    .feature-demo {
+        margin-top: 3rem;
+        background-color: var(--dark-card);
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--dark-border);
+    }
+    
+    .feature-demo-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--text-light);
+    }
+    
+    .feature-demo-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        align-items: center;
+    }
+    
+    .feature-demo-image {
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: var(--shadow-md);
+    }
+    
+    .feature-demo-text {
+        color: var(--text-secondary);
+        line-height: 1.7;
+    }
+    
+    .feature-demo-text p {
+        margin-bottom: 1rem;
+    }
+    
+    .feature-demo-btn {
+        display: inline-block;
+        background-color: var(--accent-color);
+        color: var(--text-light);
+        padding: 0.8rem 1.5rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: var(--transition);
+        margin-top: 1rem;
+    }
+    
+    .feature-demo-btn:hover {
+        background-color: #1976d2;
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+    
+    .comparison-section {
+        margin-top: 4rem;
+    }
+    
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2rem;
+        background-color: var(--dark-card);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+    }
+    
+    .comparison-table th,
+    .comparison-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--dark-border);
+    }
+    
+    .comparison-table th {
+        background-color: var(--dark-bg);
+        color: var(--text-light);
+        font-weight: 600;
+    }
+    
+    .comparison-table td {
+        color: var(--text-secondary);
+    }
+    
+    .comparison-table tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .comparison-table .check {
+        color: var(--accent-color);
+        font-weight: bold;
+    }
+    
+    .comparison-table .cross {
+        color: #f44336;
+    }
+    
+    .cta-section {
+        margin-top: 4rem;
+        text-align: center;
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 3rem;
+        border-radius: 8px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        opacity: 0.1;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--text-light);
+        position: relative;
+    }
+    
+    .cta-description {
+        color: var(--text-light);
+        opacity: 0.9;
+        margin-bottom: 2rem;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+    }
+    
+    .cta-btn {
+        display: inline-block;
+        background-color: var(--text-light);
+        color: var(--primary-color);
+        padding: 0.8rem 2rem;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+        position: relative;
+    }
+    
+    .cta-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+    
+    @media (max-width: 768px) {
+        .features-container {
+            padding: 1rem;
+        }
+        
+        .features-title {
+            font-size: 2rem;
+        }
+        
+        .features-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .features-section-title {
+            font-size: 1.5rem;
+        }
+        
+        .feature-demo-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .cta-section {
+            padding: 2rem 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="features-container">
+    <div class="features-header">
+        <h1 class="features-title">SiliFault Features</h1>
+        <p class="features-subtitle">Discover the powerful capabilities of our advanced wafer defect detection system</p>
+    </div>
+    
+    <div class="features-section">
+        <h2 class="features-section-title">Core Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3 class="feature-title">AI-Powered Analysis</h3>
+                <p class="feature-description">Our advanced machine learning algorithms can detect and classify wafer defects with unprecedented accuracy.</p>
+                <ul class="feature-list">
+                    <li>Deep learning models trained on millions of wafer images</li>
+                    <li>Multi-class defect classification</li>
+                    <li>Continuous learning and improvement</li>
+                    <li>Adaptive to new defect patterns</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="feature-title">Real-Time Processing</h3>
+                <p class="feature-description">Analyze wafer images in milliseconds with our optimized processing pipeline.</p>
+                <ul class="feature-list">
+                    <li>50ms average processing time</li>
+                    <li>Parallel processing capabilities</li>
+                    <li>Optimized for high-throughput inspection</li>
+                    <li>Reduced latency for inline inspection</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3 class="feature-title">Detailed Reports</h3>
+                <p class="feature-description">Comprehensive defect analysis with actionable insights and statistics.</p>
+                <ul class="feature-list">
+                    <li>Defect location mapping</li>
+                    <li>Statistical analysis of defect patterns</li>
+                    <li>Trend visualization</li>
+                    <li>Exportable reports in multiple formats</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="features-section">
+        <h2 class="features-section-title">Advanced Capabilities</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-microscope"></i>
+                </div>
+                <h3 class="feature-title">High-Resolution Imaging</h3>
+                <p class="feature-description">Support for high-resolution wafer images with detailed defect detection.</p>
+                <ul class="feature-list">
+                    <li>Support for images up to 16K resolution</li>
+                    <li>Multi-scale defect detection</li>
+                    <li>Sub-micron defect identification</li>
+                    <li>Image enhancement for better visibility</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                <h3 class="feature-title">Multi-Layer Analysis</h3>
+                <p class="feature-description">Analyze multiple layers of semiconductor wafers for comprehensive defect detection.</p>
+                <ul class="feature-list">
+                    <li>Layer-specific defect detection</li>
+                    <li>Cross-layer defect correlation</li>
+                    <li>3D defect visualization</li>
+                    <li>Layer comparison tools</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3 class="feature-title">Historical Data Analysis</h3>
+                <p class="feature-description">Leverage historical data to identify trends and improve manufacturing processes.</p>
+                <ul class="feature-list">
+                    <li>Long-term defect trend analysis</li>
+                    <li>Manufacturing process correlation</li>
+                    <li>Predictive maintenance insights</li>
+                    <li>Customizable data retention policies</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="features-section">
+        <h2 class="features-section-title">Integration & Deployment</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-plug"></i>
+                </div>
+                <h3 class="feature-title">Easy Integration</h3>
+                <p class="feature-description">Seamlessly integrate SiliFault with your existing manufacturing systems.</p>
+                <ul class="feature-list">
+                    <li>RESTful API for easy integration</li>
+                    <li>Support for common manufacturing protocols</li>
+                    <li>Custom integration options</li>
+                    <li>Comprehensive documentation</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-cloud"></i>
+                </div>
+                <h3 class="feature-title">Cloud & On-Premise Deployment</h3>
+                <p class="feature-description">Flexible deployment options to meet your security and performance requirements.</p>
+                <ul class="feature-list">
+                    <li>Cloud-based SaaS solution</li>
+                    <li>On-premise deployment for sensitive data</li>
+                    <li>Hybrid deployment options</li>
+                    <li>Scalable architecture</li>
+                </ul>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Enterprise Security</h3>
+                <p class="feature-description">Enterprise-grade security to protect your sensitive manufacturing data.</p>
+                <ul class="feature-list">
+                    <li>End-to-end encryption</li>
+                    <li>Role-based access control</li>
+                    <li>Compliance with industry standards</li>
+                    <li>Regular security audits</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="feature-demo">
+        <h2 class="feature-demo-title">Interactive Defect Detection Demo</h2>
+        <div class="feature-demo-content">
+            <img src="{{ url_for('static', filename='images/wafer-demo.jpg') }}" alt="Wafer Defect Detection Demo" class="feature-demo-image" onerror="this.src='https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'">
+            <div class="feature-demo-text">
+                <p>Experience the power of SiliFault's defect detection system with our interactive demo. Upload a wafer image and see how our AI identifies and classifies defects in real-time.</p>
+                <p>The demo showcases our advanced algorithms' ability to detect various types of defects, including edge defects, scratches, donut defects, and random contamination.</p>
+                <p>You can also explore detailed reports and visualizations to gain insights into the detected defects.</p>
+                <a href="{{ url_for('upload') }}" class="feature-demo-btn">Try the Demo</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="comparison-section">
+        <h2 class="features-section-title">How SiliFault Compares</h2>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>SiliFault</th>
+                    <th>Traditional Methods</th>
+                    <th>Other AI Solutions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Detection Accuracy</td>
+                    <td class="check">99.9%</td>
+                    <td class="cross">85-90%</td>
+                    <td>95-97%</td>
+                </tr>
+                <tr>
+                    <td>Processing Speed</td>
+                    <td class="check">50ms</td>
+                    <td class="cross">500ms-1s</td>
+                    <td>100-200ms</td>
+                </tr>
+                <tr>
+                    <td>Defect Types Detected</td>
+                    <td class="check">10+</td>
+                    <td class="cross">3-5</td>
+                    <td>7-8</td>
+                </tr>
+                <tr>
+                    <td>Real-time Analysis</td>
+                    <td class="check">Yes</td>
+                    <td class="cross">No</td>
+                    <td>Limited</td>
+                </tr>
+                <tr>
+                    <td>Historical Data Analysis</td>
+                    <td class="check">Advanced</td>
+                    <td class="cross">Basic</td>
+                    <td>Moderate</td>
+                </tr>
+                <tr>
+                    <td>Integration Flexibility</td>
+                    <td class="check">High</td>
+                    <td class="cross">Low</td>
+                    <td>Moderate</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="cta-section">
+        <h2 class="cta-title">Ready to Transform Your Wafer Inspection Process?</h2>
+        <p class="cta-description">Join leading semiconductor manufacturers in revolutionizing quality control with AI-powered defect detection.</p>
+        <a href="{{ url_for('contact') }}" class="cta-btn">Contact Our Team</a>
+    </div>
+</div>
+{% endblock %} 

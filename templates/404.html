@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}404 - Page Not Found{% endblock %}
+
+{% block extra_css %}
+<style>
+    .error-container {
+        text-align: center;
+        padding: 100px 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .error-code {
+        font-size: 120px;
+        font-weight: bold;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+        text-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    }
+    
+    .error-title {
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: var(--text-light);
+    }
+    
+    .error-message {
+        font-size: 18px;
+        color: var(--text-muted);
+        margin-bottom: 40px;
+    }
+    
+    .error-actions {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    .error-actions .btn {
+        padding: 12px 30px;
+        font-size: 16px;
+    }
+    
+    @media (max-width: 768px) {
+        .error-code {
+            font-size: 80px;
+        }
+        
+        .error-title {
+            font-size: 24px;
+        }
+        
+        .error-message {
+            font-size: 16px;
+        }
+        
+        .error-actions {
+            flex-direction: column;
+            gap: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="error-container">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Page Not Found</h1>
+    <p class="error-message">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+    <div class="error-actions">
+        <a href="{{ url_for('index') }}" class="btn btn-primary">Go to Homepage</a>
+        <a href="{{ url_for('contact') }}" class="btn btn-secondary">Contact Support</a>
+    </div>
+</div>
+{% endblock %} 

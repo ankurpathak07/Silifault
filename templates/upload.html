@@ -1,0 +1,348 @@
+<!-- filepath: c:\Users\Lenovo\OneDrive\Desktop\Silifault\templates\upload.html -->
+{% extends "base.html" %}
+
+{% block title %}Upload Wafer Image - SiliFault{% endblock %}
+
+{% block extra_css %}
+    <style>
+        .upload-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .upload-card {
+            background-color: var(--dark-card);
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--dark-border);
+            text-align: center;
+        }
+        
+        .upload-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
+        }
+        
+        .upload-description {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        
+        .upload-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .upload-area {
+            border: 2px dashed var(--dark-border);
+            border-radius: 8px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .upload-area:hover {
+            border-color: var(--accent-color);
+            background-color: rgba(66, 165, 245, 0.05);
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .upload-text {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .upload-hint {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            opacity: 0.8;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .upload-btn {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+            padding: 0.8rem 2rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        
+        .upload-btn:hover {
+            background-color: #1976d2;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .upload-btn:disabled {
+            background-color: var(--dark-border);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .preview-container {
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .preview-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+        
+        .preview-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .preview-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+        
+        .preview-btn {
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .preview-btn-primary {
+            background-color: var(--accent-color);
+            color: var(--text-light);
+            border: none;
+        }
+        
+        .preview-btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--dark-border);
+            color: var(--text-secondary);
+        }
+        
+        .preview-btn-primary:hover {
+            background-color: #1976d2;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .preview-btn-secondary:hover {
+            border-color: var(--accent-color);
+            color: var(--text-light);
+        }
+        
+        .loading {
+            display: none;
+            margin-top: 2rem;
+        }
+        
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(66, 165, 245, 0.2);
+            border-radius: 50%;
+            border-top-color: var(--accent-color);
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .loading-text {
+            text-align: center;
+            margin-top: 1rem;
+            color: var(--text-secondary);
+        }
+        
+        @media (max-width: 768px) {
+            .upload-container {
+                padding: 1rem;
+            }
+            
+            .upload-card {
+                padding: 1.5rem;
+            }
+            
+            .upload-title {
+                font-size: 1.75rem;
+            }
+            
+            .preview-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="upload-container">
+    <div class="upload-card">
+        <h1 class="upload-title">Upload Wafer Image</h1>
+        <p class="upload-description">Upload a wafer image for defect detection and analysis. Our AI-powered system will identify and classify defects with high accuracy.</p>
+        
+        <form class="upload-form" id="upload-form" enctype="multipart/form-data">
+            <div class="upload-area" id="upload-area">
+                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                <p class="upload-text">Drag and drop your wafer image here</p>
+                <p class="upload-hint">or click to browse files</p>
+                <input type="file" id="file-input" class="file-input" accept="image/*">
+            </div>
+            
+            <button type="submit" class="upload-btn" id="upload-btn" disabled>Analyze Image</button>
+        </form>
+        
+        <div class="preview-container" id="preview-container">
+            <h2 class="preview-title">Image Preview</h2>
+            <img id="preview-image" class="preview-image" src="" alt="Wafer Image Preview">
+            
+            <div class="preview-actions">
+                <button class="preview-btn preview-btn-primary" id="analyze-btn">Analyze Defects</button>
+                <button class="preview-btn preview-btn-secondary" id="change-btn">Change Image</button>
+            </div>
+        </div>
+        
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Analyzing image...</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const uploadBtn = document.getElementById('upload-btn');
+        const uploadForm = document.getElementById('upload-form');
+        const previewContainer = document.getElementById('preview-container');
+        const previewImage = document.getElementById('preview-image');
+        const analyzeBtn = document.getElementById('analyze-btn');
+        const changeBtn = document.getElementById('change-btn');
+        const loading = document.getElementById('loading');
+        
+        // Handle drag and drop
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+        
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+        
+        function highlight() {
+            uploadArea.classList.add('highlight');
+        }
+        
+        function unhighlight() {
+            uploadArea.classList.remove('highlight');
+        }
+        
+        // Handle file drop
+        uploadArea.addEventListener('drop', handleDrop, false);
+        
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+        
+        // Handle file input change
+        fileInput.addEventListener('change', function() {
+            handleFiles(this.files);
+        });
+        
+        // Handle click on upload area
+        uploadArea.addEventListener('click', function() {
+            fileInput.click();
+        });
+        
+        function handleFiles(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type.startsWith('image/')) {
+                    displayPreview(file);
+                    uploadBtn.disabled = false;
+                } else {
+                    alert('Please upload an image file.');
+                }
+            }
+        }
+        
+        function displayPreview(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                previewImage.src = e.target.result;
+                previewContainer.style.display = 'block';
+                uploadArea.style.display = 'none';
+                uploadBtn.style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        // Handle form submission
+        uploadForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (fileInput.files.length > 0) {
+                displayPreview(fileInput.files[0]);
+            }
+        });
+        
+        // Handle analyze button click
+        analyzeBtn.addEventListener('click', function() {
+            loading.style.display = 'block';
+            previewContainer.style.display = 'none';
+            
+            // Simulate analysis (replace with actual API call)
+            setTimeout(function() {
+                window.location.href = "{{ url_for('results') }}";
+            }, 2000);
+        });
+        
+        // Handle change button click
+        changeBtn.addEventListener('click', function() {
+            previewContainer.style.display = 'none';
+            uploadArea.style.display = 'block';
+            uploadBtn.style.display = 'block';
+            uploadBtn.disabled = true;
+            fileInput.value = '';
+        });
+    });
+</script>
+{% endblock %}

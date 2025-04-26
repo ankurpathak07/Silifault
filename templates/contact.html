@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us - SiliFault{% endblock %}
+
+{% block extra_css %}
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Montserrat:wght@400;500;600&family=Raleway:wght@400;500;600&display=swap');
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .contact-header h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .contact-header p {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, rgb(25, 25, 112), rgb(0, 191, 255));
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-info h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .info-item i {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            margin-top: 0.3rem;
+        }
+
+        .info-content h3 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .info-content p {
+            font-family: 'Raleway', sans-serif;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .contact-form {
+            background: var(--dark-card);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            font-family: 'Poppins', sans-serif;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            font-family: 'Raleway', sans-serif;
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--dark-border);
+            border-radius: 4px;
+            background: var(--dark-bg);
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 243, 255, 0.2);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--gradient-blue);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--neon-glow-blue);
+        }
+
+        @media (max-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-header h1 {
+                font-size: 2rem;
+            }
+
+            .contact-info,
+            .contact-form {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="contact-container">
+    <div class="contact-header">
+        <h1>Contact Us</h1>
+        <p>Have questions about our wafer defect detection system? We're here to help. Reach out to our team for support, inquiries, or to schedule a demo.</p>
+    </div>
+
+    <div class="contact-grid">
+        <div class="contact-info">
+            <h2>Get in Touch</h2>
+            <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div class="info-content">
+                    <h3>Location</h3>
+                    <p>123 Tech Park, Silicon Valley<br>California, USA</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <div class="info-content">
+                    <h3>Email</h3>
+                    <p>info@silifault.com<br>support@silifault.com</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-phone"></i>
+                <div class="info-content">
+                    <h3>Phone</h3>
+                    <p>+1 (555) 123-4567<br>+1 (555) 765-4321</p>
+                </div>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-clock"></i>
+                <div class="info-content">
+                    <h3>Business Hours</h3>
+                    <p>Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday - Sunday: Closed</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <form method="POST" action="{{ url_for('contact') }}">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %} 
